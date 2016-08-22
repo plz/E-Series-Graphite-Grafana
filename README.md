@@ -1,6 +1,7 @@
 # E-Series-Graphite-Grafana
-Collect Metrics from NetApp E-Series Storage appliances and dispatch them to graphite.
 ================================================================================
+Collect Metrics from NetApp E-Series Storage appliances and dispatch them to graphite.
+
 This repository contains a perl script that can connect to the NetApp Santricity web
 proxy, and collect performance metrics from a E-Series Storage Appliance.
 You can also use the Grafana Dashboard provided to visualize the collected metrics.
