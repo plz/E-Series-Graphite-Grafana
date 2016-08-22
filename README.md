@@ -1,5 +1,4 @@
 # E-Series-Graphite-Grafana
-================================================================================
 Collect Metrics from NetApp E-Series Storage appliances and dispatch them to graphite.
 
 This repository contains a perl script that can connect to the NetApp Santricity web
