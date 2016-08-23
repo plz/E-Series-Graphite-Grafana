@@ -15,79 +15,120 @@
       "height": "250px",
       "panels": [
         {
-          "title": "Latency",
+          "title": "Read Cache Utilization",
           "error": false,
-          "span": 4,
+          "span": 6,
           "editable": true,
-          "type": "graph",
+          "type": "singlestat",
           "isNew": true,
-          "id": 4,
+          "id": 11,
           "targets": [
             {
-              "target": "highestAverage(groupByNode(storage.eseries.$ESystem.volume_statistics.*.combinedResponseTime, 2, 'avg'), $TopResources)",
+              "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.readCacheUtilization, $TopResources)",
               "refId": "A"
             }
           ],
+          "links": [],
           "datasource": null,
-          "renderer": "flot",
-          "yaxes": [
+          "maxDataPoints": 100,
+          "interval": null,
+          "cacheTimeout": null,
+          "format": "none",
+          "prefix": "",
+          "postfix": "%",
+          "nullText": null,
+          "valueMaps": [
             {
-              "label": null,
-              "show": true,
-              "logBase": 1,
-              "min": null,
-              "max": null,
-              "format": "ms"
-            },
-            {
-              "label": null,
-              "show": true,
-              "logBase": 1,
-              "min": null,
-              "max": null,
-              "format": "short"
+              "value": "null",
+              "op": "=",
+              "text": "N/A"
             }
           ],
-          "xaxis": {
-            "show": true
-          },
-          "grid": {
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 1,
-          "linewidth": 2,
-          "points": false,
-          "pointradius": 5,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": false,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true
-          },
           "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true,
-            "msResolution": false
+          "valueName": "avg",
+          "prefixFontSize": "50%",
+          "valueFontSize": "100%",
+          "postfixFontSize": "50%",
+          "thresholds": "10,20",
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "sparkline": {
+            "show": true,
+            "full": false,
+            "lineColor": "rgb(2, 2, 2)",
+            "fillColor": "rgba(31, 118, 189, 0.18)"
           },
-          "timeFrom": null,
-          "timeShift": null,
-          "aliasColors": {},
-          "seriesOverrides": [],
+          "gauge": {
+            "show": false,
+            "minValue": 0,
+            "maxValue": 100,
+            "thresholdMarkers": true,
+            "thresholdLabels": false
+          },
+          "height": "100px"
+        },
+        {
+          "title": "Write Cache Utilization",
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "singlestat",
+          "isNew": true,
+          "id": 12,
+          "targets": [
+            {
+              "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.writeCacheUtilization, $TopResources)",
+              "refId": "A"
+            }
+          ],
           "links": [],
-          "height": "250px"
+          "datasource": null,
+          "maxDataPoints": 100,
+          "interval": null,
+          "cacheTimeout": null,
+          "format": "none",
+          "prefix": "",
+          "postfix": "%",
+          "nullText": null,
+          "valueMaps": [
+            {
+              "value": "null",
+              "op": "=",
+              "text": "N/A"
+            }
+          ],
+          "nullPointMode": "connected",
+          "valueName": "avg",
+          "prefixFontSize": "50%",
+          "valueFontSize": "80%",
+          "postfixFontSize": "50%",
+          "thresholds": "80,90",
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "sparkline": {
+            "show": true,
+            "full": false,
+            "lineColor": "rgb(1, 1, 1)",
+            "fillColor": "rgba(31, 118, 189, 0.18)"
+          },
+          "gauge": {
+            "show": false,
+            "minValue": 0,
+            "maxValue": 100,
+            "thresholdMarkers": true,
+            "thresholdLabels": false
+          },
+          "height": "100px"
         },
         {
           "aliasColors": {},
@@ -102,17 +143,93 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
-          "id": 2,
+          "height": "250px",
+          "id": 4,
           "isNew": true,
           "legend": {
+            "alignAsTable": true,
             "avg": true,
             "current": true,
             "max": true,
             "min": false,
             "show": true,
             "total": false,
-            "values": true,
-            "alignAsTable": true
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "refId": "A",
+              "target": "highestAverage(groupByNode(storage.eseries.$ESystem.volume_statistics.*.combinedResponseTime, 2, 'avg'), $TopResources)"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Latency",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "xaxis": {
+            "show": true
+          },
+          "yaxes": [
+            {
+              "format": "ms",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "height": "250px",
+          "id": 2,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
           },
           "lines": true,
           "linewidth": 2,
@@ -161,8 +278,7 @@
               "min": null,
               "show": true
             }
-          ],
-          "height": "250px"
+          ]
         },
         {
           "aliasColors": {},
@@ -177,17 +293,18 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
+          "height": "250px",
           "id": 3,
           "isNew": true,
           "legend": {
+            "alignAsTable": true,
             "avg": true,
             "current": true,
             "max": true,
             "min": false,
             "show": true,
             "total": false,
-            "values": true,
-            "alignAsTable": true
+            "values": true
           },
           "lines": true,
           "linewidth": 2,
@@ -236,92 +353,90 @@
               "min": null,
               "show": true
             }
-          ],
-          "height": "250px"
+          ]
         }
       ],
       "title": "Highlights"
     },
     {
-      "title": "Workload Drilldown",
-      "height": "250px",
-      "editable": true,
       "collapse": false,
+      "editable": true,
+      "height": "250px",
       "panels": [
         {
-          "title": "Read Latency",
-          "error": false,
-          "span": 4,
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
           "editable": true,
-          "type": "graph",
-          "isNew": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "height": "250px",
           "id": 5,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
           "targets": [
             {
-              "target": "highestAverage(groupByNode(storage.eseries.$ESystem.volume_statistics.*.readResponseTime, 2, 'avg'), $TopResources)",
-              "refId": "A"
+              "refId": "A",
+              "target": "highestAverage(groupByNode(storage.eseries.$ESystem.volume_statistics.*.readResponseTime, 2, 'avg'), $TopResources)"
             }
           ],
-          "datasource": null,
-          "renderer": "flot",
-          "yaxes": [
-            {
-              "label": null,
-              "show": true,
-              "logBase": 1,
-              "min": null,
-              "max": null,
-              "format": "ms"
-            },
-            {
-              "label": null,
-              "show": true,
-              "logBase": 1,
-              "min": null,
-              "max": null,
-              "format": "short"
-            }
-          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Read Latency",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
           "xaxis": {
             "show": true
           },
-          "grid": {
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 1,
-          "linewidth": 2,
-          "points": false,
-          "pointradius": 5,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": false,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true,
-            "msResolution": false
-          },
-          "timeFrom": null,
-          "timeShift": null,
-          "aliasColors": {},
-          "seriesOverrides": [],
-          "links": [],
-          "height": "250px"
+          "yaxes": [
+            {
+              "format": "ms",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
         },
         {
           "aliasColors": {},
@@ -336,17 +451,18 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
+          "height": "250px",
           "id": 6,
           "isNew": true,
           "legend": {
+            "alignAsTable": true,
             "avg": true,
             "current": true,
             "max": true,
             "min": false,
             "show": true,
             "total": false,
-            "values": true,
-            "alignAsTable": true
+            "values": true
           },
           "lines": true,
           "linewidth": 2,
@@ -395,8 +511,7 @@
               "min": null,
               "show": true
             }
-          ],
-          "height": "250px"
+          ]
         },
         {
           "aliasColors": {},
@@ -411,17 +526,18 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
+          "height": "250px",
           "id": 7,
           "isNew": true,
           "legend": {
+            "alignAsTable": true,
             "avg": true,
             "current": true,
             "max": true,
             "min": false,
             "show": true,
             "total": false,
-            "values": true,
-            "alignAsTable": true
+            "values": true
           },
           "lines": true,
           "linewidth": 2,
@@ -470,83 +586,82 @@
               "min": null,
               "show": true
             }
-          ],
-          "height": "250px"
+          ]
         },
         {
-          "title": "Write Latency",
-          "error": false,
-          "span": 4,
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
           "editable": true,
-          "type": "graph",
-          "isNew": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "height": "250px",
           "id": 8,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
           "targets": [
             {
-              "target": "highestAverage(groupByNode(storage.eseries.$ESystem.volume_statistics.*.writeResponseTime, 2, 'avg'), $TopResources)",
-              "refId": "A"
+              "refId": "A",
+              "target": "highestAverage(groupByNode(storage.eseries.$ESystem.volume_statistics.*.writeResponseTime, 2, 'avg'), $TopResources)"
             }
           ],
-          "datasource": null,
-          "renderer": "flot",
-          "yaxes": [
-            {
-              "label": null,
-              "show": true,
-              "logBase": 1,
-              "min": null,
-              "max": null,
-              "format": "ms"
-            },
-            {
-              "label": null,
-              "show": true,
-              "logBase": 1,
-              "min": null,
-              "max": null,
-              "format": "short"
-            }
-          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Write Latency",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
           "xaxis": {
             "show": true
           },
-          "grid": {
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 1,
-          "linewidth": 2,
-          "points": false,
-          "pointradius": 5,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": false,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true,
-            "msResolution": false
-          },
-          "timeFrom": null,
-          "timeShift": null,
-          "aliasColors": {},
-          "seriesOverrides": [],
-          "links": [],
-          "height": "250px"
+          "yaxes": [
+            {
+              "format": "ms",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
         },
         {
           "aliasColors": {},
@@ -561,17 +676,18 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
+          "height": "250px",
           "id": 9,
           "isNew": true,
           "legend": {
+            "alignAsTable": true,
             "avg": true,
             "current": true,
             "max": true,
             "min": false,
             "show": true,
             "total": false,
-            "values": true,
-            "alignAsTable": true
+            "values": true
           },
           "lines": true,
           "linewidth": 2,
@@ -620,8 +736,7 @@
               "min": null,
               "show": true
             }
-          ],
-          "height": "250px"
+          ]
         },
         {
           "aliasColors": {},
@@ -636,17 +751,18 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
+          "height": "250px",
           "id": 10,
           "isNew": true,
           "legend": {
+            "alignAsTable": true,
             "avg": true,
             "current": true,
             "max": true,
             "min": false,
             "show": true,
             "total": false,
-            "values": true,
-            "alignAsTable": true
+            "values": true
           },
           "lines": true,
           "linewidth": 2,
@@ -695,15 +811,15 @@
               "min": null,
               "show": true
             }
-          ],
-          "height": "250px"
+          ]
         }
-      ]
+      ],
+      "title": "Workload Drilldown"
     }
   ],
   "time": {
-    "from": "2016-08-21T06:05:27.186Z",
-    "to": "2016-08-22T13:54:32.814Z"
+    "from": "2016-08-23T00:51:31.865Z",
+    "to": "2016-08-23T09:00:01.768Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -733,11 +849,18 @@
   "templating": {
     "list": [
       {
-        "type": "query",
+        "current": {
+          "value": [
+            "$__all"
+          ],
+          "text": "All",
+          "tags": []
+        },
         "datasource": null,
-        "refresh": 1,
-        "name": "ESystem",
         "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "ESystem",
         "options": [
           {
             "text": "All",
@@ -765,88 +888,81 @@
             "selected": false
           }
         ],
-        "includeAll": true,
-        "multi": true,
         "query": "storage.eseries.*",
-        "current": {
-          "text": "All",
-          "value": [
-            "$__all"
-          ],
-          "tags": []
-        }
+        "refresh": 1,
+        "type": "query"
       },
       {
-        "type": "custom",
+        "current": {
+          "tags": [],
+          "text": "1",
+          "value": "1"
+        },
         "datasource": null,
-        "refresh": 0,
-        "name": "TopResources",
         "hide": 0,
-        "options": [
-          {
-            "text": "1",
-            "value": "1",
-            "selected": false
-          },
-          {
-            "text": "2",
-            "value": "2",
-            "selected": false
-          },
-          {
-            "text": "3",
-            "value": "3",
-            "selected": false
-          },
-          {
-            "text": "4",
-            "value": "4",
-            "selected": true
-          },
-          {
-            "text": "5",
-            "value": "5",
-            "selected": false
-          },
-          {
-            "text": "6",
-            "value": "6",
-            "selected": false
-          },
-          {
-            "text": "8",
-            "value": "8",
-            "selected": false
-          },
-          {
-            "text": "10",
-            "value": "10",
-            "selected": false
-          },
-          {
-            "text": "15",
-            "value": "15",
-            "selected": false
-          },
-          {
-            "text": "20",
-            "value": "20",
-            "selected": false
-          },
-          {
-            "text": "40",
-            "value": "40",
-            "selected": false
-          }
-        ],
         "includeAll": false,
         "multi": false,
+        "name": "TopResources",
+        "options": [
+          {
+            "selected": true,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "2",
+            "value": "2"
+          },
+          {
+            "selected": false,
+            "text": "3",
+            "value": "3"
+          },
+          {
+            "selected": false,
+            "text": "4",
+            "value": "4"
+          },
+          {
+            "selected": false,
+            "text": "5",
+            "value": "5"
+          },
+          {
+            "selected": false,
+            "text": "6",
+            "value": "6"
+          },
+          {
+            "selected": false,
+            "text": "8",
+            "value": "8"
+          },
+          {
+            "selected": false,
+            "text": "10",
+            "value": "10"
+          },
+          {
+            "selected": false,
+            "text": "15",
+            "value": "15"
+          },
+          {
+            "selected": false,
+            "text": "20",
+            "value": "20"
+          },
+          {
+            "selected": false,
+            "text": "40",
+            "value": "40"
+          }
+        ],
         "query": "1,2,3,4,5,6,8,10,15,20,40",
-        "current": {
-          "text": "4",
-          "value": "4",
-          "tags": []
-        }
+        "refresh": 0,
+        "type": "custom"
       }
     ]
   },
@@ -855,6 +971,6 @@
   },
   "refresh": false,
   "schemaVersion": 12,
-  "version": 13,
+  "version": 16,
   "links": []
 }
