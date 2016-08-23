@@ -9,7 +9,7 @@ Data Collection
 --------------------------------------------------------------------------------
 * `graphite-collector/eseries-metrics-collector.pl` - Script that will connect
    to the web proxy and collect data, and pushes it to graphite. You'll need
-   a functioning web proxy as requisite.
+   a functioning web proxy as pre-requisite.
 
 This collection script has been executing on several Linux Systems with the
 following specs:
@@ -17,6 +17,7 @@ following specs:
 * CentOS release 6.7 (Final)
 * Perl v5.18.2
 * Santricity Web Services Proxy 1.4 (01.40.7000.0004)
+* Grafana 3.0.4
 
 Data Visualization
 --------------------------------------------------------------------------------
@@ -66,13 +67,11 @@ And you should obtain something like:
 
     "id":"0e8bf25f-247d-4f87-97f3-xxxxxxxxxx",
 
-
 Data Collection Script Configuration File
 -------------------------------------------------------------------------------
 The data collection script will need a configuration file with details on how
 to connect to the proxy. Check `graphite-collector/proxy-config.conf` or 
 the following snippet:
-
 
     ###
     ### Santricity Web Services Proxy hostname, FQDN, or IP
@@ -97,6 +96,18 @@ the following snippet:
     ###
     user        = ro
     password    = XXXXXXXXXXXXXXX
+
+TODO
+--------------------------------------------------------------------------------
+This tool is a work in progress, and many features are yet missing in order to
+become something like [NetApp Harvest](http://blog.pkiwi.com/category/netapp-harvest/) for FAS Systems.
+
+Contributions are welcome, and these are some of the topics that are in the TODO
+list:
+
+* Configurable Graphite Parameter. (connection details, metrics path, etc)
+* Include per disc metrics.
+* Include metrics on the collection itself (timings)
 
 Contact
 --------------------------------------------------------------------------------
