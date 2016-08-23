@@ -109,7 +109,7 @@ Contributions are welcome, and these are some of the topics that are in the TODO
 list:
 
 * Configurable Graphite Parameter. (connection details, metrics path, etc)
-* Include per disc metrics.
+* Include per disk metrics.
 * Include metrics on the collection itself (timings)
 
 Contact
