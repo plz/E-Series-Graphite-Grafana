@@ -11,7 +11,7 @@ Data Collection
    to the web proxy and collect data, and pushes it to graphite. You'll need
    a functioning web proxy as pre-requisite.
 
-This collection script has been executing on several Linux Systems with the
+The collection script has been running on several Linux Systems with the
 following specs:
 
 * CentOS release 6.7 (Final)
@@ -22,7 +22,10 @@ following specs:
 Data Visualization
 --------------------------------------------------------------------------------
 * `grafana-dashboards/Overview.json` - Import this dashboard and visualize the 
-   collected metrics.
+   collected metrics. This dashboard was inspired and tries to keep the look &
+   feel similar to the _Cluster Group_ dashboard done by
+   [Chris Madden](https://github.com/dutchiechris) for
+   [NetApp Harvest](http://blog.pkiwi.com/category/netapp-harvest/).
 
 Perl Dependencies
 -------------------------------------------------------------------------------
