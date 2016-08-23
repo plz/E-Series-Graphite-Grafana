@@ -11,6 +11,13 @@ Data Collection
    to the web proxy and collect data, and pushes it to graphite. You'll need
    a functioning web proxy as requisite.
 
+This collection script has been executing on several Linux Systems with the
+following specs:
+
+* CentOS release 6.7 (Final)
+* Perl v5.18.2
+* Santricity Web Services Proxy 1.4 (01.40.7000.0004)
+
 Data Visualization
 --------------------------------------------------------------------------------
 * `grafana-dashboards/Overview.json` - Import this dashboard and visualize the 
@@ -51,6 +58,15 @@ Usage: ./eseries-metrics-collector.pl [options]
 * `-t`: Timeout in seconds for API Calls (Default=15).
 * `-i`: E-Series ID to Poll. ID is bound to proxy instance. If not defined use all appliances known by Proxy.
 
+If you are not familiar with the System ID you can go to your console and execute the following:
+
+    curl -X GET --header "Accept: application/json" "http://myproxy.example.com:8080/devmgr/v2/storage-systems" -u ro
+
+And you should obtain something like:
+
+    "id":"0e8bf25f-247d-4f87-97f3-xxxxxxxxxx",
+
+
 Data Collection Script Configuration File
 -------------------------------------------------------------------------------
 The data collection script will need a configuration file with details on how
@@ -81,7 +97,6 @@ the following snippet:
     ###
     user        = ro
     password    = XXXXXXXXXXXXXXX
-
 
 Contact
 --------------------------------------------------------------------------------
