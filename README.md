@@ -14,7 +14,28 @@ Data Collection
 Data Visualization
 --------------------------------------------------------------------------------
 * `grafana-dashboards/Overview.json` - Import this dashboard and visualize the 
-   collected metrics
+   collected metrics.
+
+Perl Dependencies
+-------------------------------------------------------------------------------
+* LWP::UserAgent
+* MIME::Base64
+* JSON
+* Config::Tiny
+* Benchmark
+* Scalar::Util
+
+Setting up the Web Proxy
+-------------------------------------------------------------------------------
+Although the steps to configure the Santricity Web Services Proxy is out of scope
+there are 2 important configuration settings you need to define in wsconfig.xml
+
+* `<env key="stats.poll.interval">60</env>`
+* `<env key="stats.poll.save.history">1</env>`
+
+If you need extra details on how to work with the proxy, you might want to check
+the [User Guide](https://library.netapp.com/ecm/ecm_get_file/ECMLP2428357). This
+link requires access to NetApp support site.
 
 Contact
 --------------------------------------------------------------------------------
