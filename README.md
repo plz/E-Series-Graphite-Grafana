@@ -37,6 +37,52 @@ If you need extra details on how to work with the proxy, you might want to check
 the [User Guide](https://library.netapp.com/ecm/ecm_get_file/ECMLP2428357). This
 link requires access to NetApp support site.
 
+Data Collection Script Usage
+-------------------------------------------------------------------------------
+Script is meant to be run under crontab every minute. 
+
+./eseries-metrics-collector.pl -h
+Usage: ./eseries-metrics-collector.pl [options]
+
+* `-h`: This help message.
+* `-n`: Don't push to graphite.
+* `-d`: Debug mode, increase verbosity.
+* `-c`: Webservice proxy config file.
+* `-t`: Timeout in seconds for API Calls (Default=15).
+* `-i`: E-Series ID to Poll. ID is bound to proxy instance. If not defined use all appliances known by Proxy.
+
+Data Collection Script Configuration File
+-------------------------------------------------------------------------------
+The data collection script will need a configuration file with details on how
+to connect to the proxy. Check `graphite-collector/proxy-config.conf` or 
+the following snippet:
+
+
+    ###
+    ### Santricity Web Services Proxy hostname, FQDN, or IP
+    ###
+    proxy = mywebservice.example.com
+
+    ###
+    ### Protocol (http|https)
+    ###
+    proto = http
+
+    ###
+    ### TCP Port
+    ###
+    ###   - Default is 8080 for HTTP
+    ###   - Default is 8443 for HTTPS
+    ###
+    port = 8080
+
+    ###
+    ### User and password to connect with
+    ###
+    user        = ro
+    password    = XXXXXXXXXXXXXXX
+
+
 Contact
 --------------------------------------------------------------------------------
 **Project website**: https://github.com/plz/E-Series-Graphite-Grafana
