@@ -39,7 +39,7 @@ Perl Dependencies
 Setting up the Web Proxy
 -------------------------------------------------------------------------------
 Although the steps to configure the Santricity Web Services Proxy is out of scope
-there are 2 important configuration settings you need to define in wsconfig.xml
+there are 2 important configuration settings you need to define in *wsconfig.xml*
 
 * `<env key="stats.poll.interval">60</env>`
 * `<env key="stats.poll.save.history">1</env>`
