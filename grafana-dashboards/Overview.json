@@ -15,41 +15,7 @@
       "height": "250px",
       "panels": [
         {
-          "title": "Read Cache Utilization",
-          "error": false,
-          "span": 6,
-          "editable": true,
-          "type": "singlestat",
-          "isNew": true,
-          "id": 11,
-          "targets": [
-            {
-              "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.readCacheUtilization, $TopResources)",
-              "refId": "A"
-            }
-          ],
-          "links": [],
-          "datasource": null,
-          "maxDataPoints": 100,
-          "interval": null,
           "cacheTimeout": null,
-          "format": "none",
-          "prefix": "",
-          "postfix": "%",
-          "nullText": null,
-          "valueMaps": [
-            {
-              "value": "null",
-              "op": "=",
-              "text": "N/A"
-            }
-          ],
-          "nullPointMode": "connected",
-          "valueName": "avg",
-          "prefixFontSize": "50%",
-          "valueFontSize": "100%",
-          "postfixFontSize": "50%",
-          "thresholds": "10,20",
           "colorBackground": true,
           "colorValue": false,
           "colors": [
@@ -57,57 +23,57 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "100px",
+          "id": 11,
+          "interval": null,
+          "isNew": true,
+          "links": [],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "%",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "span": 6,
           "sparkline": {
-            "show": true,
+            "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(2, 2, 2)",
-            "fillColor": "rgba(31, 118, 189, 0.18)"
+            "show": true
           },
-          "gauge": {
-            "show": false,
-            "minValue": 0,
-            "maxValue": 100,
-            "thresholdMarkers": true,
-            "thresholdLabels": false
-          },
-          "height": "100px"
-        },
-        {
-          "title": "Write Cache Utilization",
-          "error": false,
-          "span": 6,
-          "editable": true,
-          "type": "singlestat",
-          "isNew": true,
-          "id": 12,
           "targets": [
             {
-              "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.writeCacheUtilization, $TopResources)",
-              "refId": "A"
+              "refId": "A",
+              "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.readCacheUtilization, $TopResources)"
             }
           ],
-          "links": [],
-          "datasource": null,
-          "maxDataPoints": 100,
-          "interval": null,
-          "cacheTimeout": null,
-          "format": "none",
-          "prefix": "",
-          "postfix": "%",
-          "nullText": null,
+          "thresholds": "10,20",
+          "title": "Read Cache Utilization",
+          "type": "singlestat",
+          "valueFontSize": "100%",
           "valueMaps": [
             {
-              "value": "null",
               "op": "=",
-              "text": "N/A"
+              "text": "N/A",
+              "value": "null"
             }
           ],
-          "nullPointMode": "connected",
-          "valueName": "avg",
-          "prefixFontSize": "50%",
-          "valueFontSize": "80%",
-          "postfixFontSize": "50%",
-          "thresholds": "80,90",
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
           "colorBackground": true,
           "colorValue": false,
           "colors": [
@@ -115,20 +81,54 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "100px",
+          "id": 12,
+          "interval": null,
+          "isNew": true,
+          "links": [],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "%",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "span": 6,
           "sparkline": {
-            "show": true,
+            "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(1, 1, 1)",
-            "fillColor": "rgba(31, 118, 189, 0.18)"
+            "show": true
           },
-          "gauge": {
-            "show": false,
-            "minValue": 0,
-            "maxValue": 100,
-            "thresholdMarkers": true,
-            "thresholdLabels": false
-          },
-          "height": "100px"
+          "targets": [
+            {
+              "refId": "A",
+              "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.writeCacheUtilization, $TopResources)"
+            }
+          ],
+          "thresholds": "80,90",
+          "title": "Write Cache Utilization",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
         },
         {
           "aliasColors": {},
@@ -818,8 +818,8 @@
     }
   ],
   "time": {
-    "from": "2016-08-23T00:51:31.865Z",
-    "to": "2016-08-23T09:00:01.768Z"
+    "from": "now/d",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -853,8 +853,7 @@
           "value": [
             "$__all"
           ],
-          "text": "All",
-          "tags": []
+          "text": "$__all"
         },
         "datasource": null,
         "hide": 0,
@@ -971,6 +970,6 @@
   },
   "refresh": false,
   "schemaVersion": 12,
-  "version": 16,
+  "version": 18,
   "links": []
 }
