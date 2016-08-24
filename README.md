@@ -100,6 +100,10 @@ the following snippet:
     user        = ro
     password    = XXXXXXXXXXXXXXX
 
+BUGS
+--------------------------------------------------------------------------------
+Please report them [here](https://github.com/plz/E-Series-Graphite-Grafana/issues)
+
 TODO
 --------------------------------------------------------------------------------
 This tool is a work in progress, and many features are yet missing in order to
@@ -108,9 +112,9 @@ become something like [NetApp Harvest](http://blog.pkiwi.com/category/netapp-har
 Contributions are welcome, and these are some of the topics that are in the TODO
 list:
 
-* Configurable Graphite Parameter. (connection details, metrics path, etc)
-* Include per disk metrics.
-* Include metrics on the collection itself (timings)
+* Configurable Graphite Parameters. (connection details, metrics path, etc). [Issue2](https://github.com/plz/E-Series-Graphite-Grafana/issues/2)
+* Include per disk metrics.[Issue1](https://github.com/plz/E-Series-Graphite-Grafana/issues/1)
+* Include metrics on the collection itself (timings) [Issue3](https://github.com/plz/E-Series-Graphite-Grafana/issues/3)
 
 Contact
 --------------------------------------------------------------------------------
