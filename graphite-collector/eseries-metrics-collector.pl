@@ -270,10 +270,11 @@ sub process_vol_metrics {
 # Manage Sending the metrics to Graphite Instance
 sub post_to_graphite {
     my ($met_coll)          = (@_);
-    my $local_relay_timeout = 5;
-    my $local_relay_server  = 'localhost';
-    my $local_relay_port    = 3002;
-    my $metrics_path        = 'storage.eseries.';
+    my $local_relay_timeout = $config->{'graphite'}->{'timeout'};
+    my $local_relay_server  = $config->{'graphite'}->{'server'};
+    my $local_relay_port    = $config->{'graphite'}->{'port'};
+    my $metrics_path        = $config->{'graphite'}->{'root'};
+    my $local_relay_proto   = $config->{'graphite'}->{'proto'};
     my $epoch               = time();
     my $full_metric;
 
@@ -283,7 +284,7 @@ sub post_to_graphite {
         PeerAddr => $local_relay_server,
         PeerPort => $local_relay_port,
         Timeout  => $local_relay_timeout,
-        Proto    => 'tcp'
+        Proto    => $local_relay_proto,
     );
 
     if ( !defined $connection ) {
@@ -302,6 +303,7 @@ sub post_to_graphite {
             foreach my $mets ( keys $met_coll->{$system}->{$vols} ) {
                 $full_metric
                     = $metrics_path
+                    . "."
                     . $system
                     . "."
                     . $vols . "."
