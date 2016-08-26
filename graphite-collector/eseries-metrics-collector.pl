@@ -65,6 +65,26 @@ my %vol_metrics = (
     'writeResponseTime'          => 0,
     'writeThroughput'            => 0,
 );
+# Selected metrics to collect from any drive, for ease of reading keep sorted.
+my %drive_metrics = (
+    'averageReadOpSize'     => 0,
+    'averageWriteOpSize'    => 0,
+    'combinedIOps'          => 0,
+    'combinedResponseTime'  => 0,
+    'combinedThroughput'    => 0,
+    'otherIOps'             => 0,
+    'readIOps'              => 0,
+    'readOps'               => 0,
+    'readPhysicalIOps'      => 0,
+    'readResponseTime'      => 0,
+    'readThroughput'        => 0,
+    'writeIOps'             => 0,
+    'writeOps'              => 0,
+    'writePhysicalIOps'     => 0,
+    'writeResponseTime'     => 0,
+    'writeThroughput'       => 0,
+);
+
 my $metrics_collected;
 my $system_id;
 
@@ -168,9 +188,13 @@ if ( $response->is_success ) {
         # When polling only one system we get a Hash.
         my $stg_sys_name = $storage_systems->{name};
         my $stg_sys_id   = $storage_systems->{id};
+
         logPrint("Processing $stg_sys_name ($stg_sys_id)");
+
         $metrics_collected->{$stg_sys_name} = {};
+
         get_vol_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
+        get_drive_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
     }
     else {
 
@@ -178,9 +202,13 @@ if ( $response->is_success ) {
         for my $stg_sys (@$storage_systems) {
             my $stg_sys_name = $stg_sys->{name};
             my $stg_sys_id   = $stg_sys->{id};
+
             logPrint("Processing $stg_sys_name ($stg_sys_id)");
+
             $metrics_collected->{$stg_sys_name} = {};
+
             get_vol_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
+            get_drive_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
         }
     }
 }
@@ -221,13 +249,12 @@ sub get_vol_stats {
     my ( $sys_name, $sys_id, $met_coll ) = (@_);
 
     my $t0 = Benchmark->new;
-    logPrint("API: Calling volume-statistics");
+    logPrint("API: Calling analysed-volume-statistics");
     my $stats_response
         = $ua->get( $base_url 
             . $api_ver
             . '/storage-systems/'
             . $sys_id
-#            . '/volume-statistics' );
             . '/analysed-volume-statistics' );
     my $t1 = Benchmark->new;
     my $td = timediff( $t1, $t0 );
@@ -323,6 +350,61 @@ sub post_to_graphite {
                     logPrint("post_to_graphite: Socket failure with reason: [$socket_err]",  "err" );
                     undef $connection;
                 }
+            }
+        }
+    }
+}
+
+# Invoke remote API to get per drive statistics.
+sub get_drive_stats {
+    my ( $sys_name, $sys_id, $met_coll ) = (@_);
+
+    my $t0 = Benchmark->new;
+    logPrint("API: Calling analysed-drive-statistics");
+    my $stats_response
+        = $ua->get( $base_url
+            . $api_ver
+            . '/storage-systems/'
+            . $sys_id
+            . '/analysed-drive-statistics' );
+    my $t1 = Benchmark->new;
+    my $td = timediff( $t1, $t0 );
+    logPrint( "API: Call took " . timestr($td) );
+    if ( $stats_response->is_success ) {
+        my $drive_stats = from_json( $stats_response->decoded_content );
+        logPrint( "get_drive_stats: Number of drives: " . scalar(@$drive_stats) );
+
+        # skip if no drives present on this system (really possible?)
+        if ( scalar(@$drive_stats) ) {
+            process_drive_metrics( $sys_name, $drive_stats, $metrics_collected );
+        }
+        else {
+            warn "Not processing $sys_name because it has no Drives\n"
+                if $DEBUG;
+        }
+    }
+    else {
+        die $stats_response->status_line;
+    }
+}
+
+# Coalece Drive metrics into custom structure, to just store the ones
+# we care about.
+sub process_drive_metrics {
+    my ( $sys_name, $drv_mets, $met_coll ) = (@_);
+
+    for my $drv (@$drv_mets) {
+        my $disk_id = $drv->{diskId};
+        logPrint( "process_drive_metrics: DiskID " . $disk_id ) if $DEBUG;
+        my $drv_met_key = "drive_statistics.$disk_id";
+        $metrics_collected->{$sys_name}->{$drv_met_key} = {};
+
+        #print Dumper($drv);
+        foreach my $met_name ( keys %{$drv} ) {
+
+            if ( exists $drive_metrics{$met_name} ) {
+                $met_coll->{$sys_name}->{$drv_met_key}->{$met_name}
+                    = $drv->{$met_name};
             }
         }
     }
