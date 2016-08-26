@@ -29,7 +29,7 @@ use Sys::Syslog;
 use Scalar::Util qw(looks_like_number);
 
 my $DEBUG            = 0;
-my $api_ver          = '/devmgr/v2';
+my $API_VER          = '/devmgr/v2';
 my $API_TIMEOUT      = 15;
 my $PUSH_TO_GRAPHITE = 1;
 
@@ -169,11 +169,11 @@ my $response;
 if ($system_id) {
     logPrint("API: Calling storage-systems/{system-id} ...");
     $response
-        = $ua->get( $base_url . $api_ver . '/storage-systems/' . $system_id );
+        = $ua->get( $base_url . $API_VER . '/storage-systems/' . $system_id );
 }
 else {
     logPrint("API: Calling storage-systems...");
-    $response = $ua->get( $base_url . $api_ver . '/storage-systems' );
+    $response = $ua->get( $base_url . $API_VER . '/storage-systems' );
 }
 my $t1 = Benchmark->new;
 my $td = timediff( $t1, $t0 );
@@ -252,7 +252,7 @@ sub get_vol_stats {
     logPrint("API: Calling analysed-volume-statistics");
     my $stats_response
         = $ua->get( $base_url 
-            . $api_ver
+            . $API_VER
             . '/storage-systems/'
             . $sys_id
             . '/analysed-volume-statistics' );
@@ -363,7 +363,7 @@ sub get_drive_stats {
     logPrint("API: Calling analysed-drive-statistics");
     my $stats_response
         = $ua->get( $base_url
-            . $api_ver
+            . $API_VER
             . '/storage-systems/'
             . $sys_id
             . '/analysed-drive-statistics' );
