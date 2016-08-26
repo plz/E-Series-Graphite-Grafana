@@ -185,7 +185,13 @@ if ( $response->is_success ) {
     }
 }
 else {
-    die $response->status_line;
+    if ( $response->code eq '404' ) {
+        warn "The SystemID: ".$system_id .", was not found on the proxy.\n";
+        warn "Please check the documentation on how to search for it.\n";
+    }
+    else {
+        die $response->status_line;
+    }
 }
 
 print "Metrics Collected: \n " . Dumper( \$metrics_collected ) if $DEBUG;
