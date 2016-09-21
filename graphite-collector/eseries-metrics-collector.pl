@@ -331,9 +331,9 @@ sub post_to_graphite {
     # Send metrics and upon error fail fast
     foreach my $system ( keys %$met_coll ) {
         logPrint("post_to_graphite: Build Metrics for -$system-") if $DEBUG;
-        foreach my $vols ( keys $met_coll->{$system} ) {
+        foreach my $vols ( keys %{$met_coll->{$system}} ) {
             logPrint("post_to_graphite: Build Metrics for vol -$vols-") if $DEBUG;
-            foreach my $mets ( keys $met_coll->{$system}->{$vols} ) {
+            foreach my $mets ( keys %{$met_coll->{$system}->{$vols}} ) {
                 $full_metric
                     = $metrics_path
                     . "."
