@@ -65,28 +65,35 @@ my %vol_metrics = (
     'writeResponseTime'          => 0,
     'writeThroughput'            => 0,
 );
+
 # Selected metrics to collect from any drive, for ease of reading keep sorted.
 my %drive_metrics = (
-    'averageReadOpSize'     => 0,
-    'averageWriteOpSize'    => 0,
-    'combinedIOps'          => 0,
-    'combinedResponseTime'  => 0,
-    'combinedThroughput'    => 0,
-    'otherIOps'             => 0,
-    'readIOps'              => 0,
-    'readOps'               => 0,
-    'readPhysicalIOps'      => 0,
-    'readResponseTime'      => 0,
-    'readThroughput'        => 0,
-    'writeIOps'             => 0,
-    'writeOps'              => 0,
-    'writePhysicalIOps'     => 0,
-    'writeResponseTime'     => 0,
-    'writeThroughput'       => 0,
+    'averageReadOpSize'    => 0,
+    'averageWriteOpSize'   => 0,
+    'combinedIOps'         => 0,
+    'combinedResponseTime' => 0,
+    'combinedThroughput'   => 0,
+    'otherIOps'            => 0,
+    'readIOps'             => 0,
+    'readOps'              => 0,
+    'readPhysicalIOps'     => 0,
+    'readResponseTime'     => 0,
+    'readThroughput'       => 0,
+    'writeIOps'            => 0,
+    'writeOps'             => 0,
+    'writePhysicalIOps'    => 0,
+    'writeResponseTime'    => 0,
+    'writeThroughput'      => 0,
 );
 
 my $metrics_collected;
 my $system_id;
+
+# Pattern to detect a valid system ID
+my $sys_id_pattern = qr/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/;
+
+# Flag to detect ID based on System Name.
+my $fetch_id_from_name = 0;
 
 # Send our output to rsyslog.
 openlog( 'eseries-metrics-collector', 'pid', 'local0' );
@@ -102,8 +109,9 @@ if ( $opts{'h'} ) {
     print "  -d: Debug mode, increase verbosity.\n";
     print "  -c: Webservice proxy config file.\n";
     print "  -t: Timeout in secs for API Calls (Default=$API_TIMEOUT).\n";
-    print "  -i: E-Series ID to Poll. ID is bound to proxy instance.\n";
-    print "      If not defined use all appliances known by Proxy.\n";
+    print "  -i: E-Series ID or System Name to Poll.";
+    print " ID is bound to proxy instance. If not defined it will";
+    print " use all appliances known by Proxy.\n";
 
     exit 0;
 }
@@ -122,19 +130,29 @@ else {
     exit 1;
 }
 if ( $opts{'i'} ) {
-    $system_id = $opts{'i'};
-    logPrint("Will only poll -$system_id-");
+    if ( $opts{'i'} =~ $sys_id_pattern ) {
+        $system_id = $opts{'i'};
+        logPrint("Will only poll -$system_id-");
+    }
+    else {
+        logPrint( "$opts{'i'} does not seem to be a valid System ID,"
+                . " will validate it as System Name." );
+
+        # maybe a system name was provided, lets figure it out.
+        $fetch_id_from_name = 1;
+    }
 }
 else {
     logPrint("Will poll all known systems by Webservice proxy.");
 }
 if ( $opts{'n'} ) {
+
     # unset this, as user defined to not send metrics to graphite.
     $PUSH_TO_GRAPHITE = 0;
     logPrint("User decided to not push metrics to graphite.");
 }
 if ( $opts{'t'} ) {
-    if ( looks_like_number($opts{'t'}) ){
+    if ( looks_like_number( $opts{'t'} ) ) {
         $API_TIMEOUT = $opts{'t'};
         logPrint("Redefined timeout to $API_TIMEOUT seconds");
     }
@@ -142,7 +160,6 @@ if ( $opts{'t'} ) {
         warn "Timeout ($opts{'t'}) is not a valid number. Using default.\n";
     }
 }
-
 
 my $config = Config::Tiny->new;
 $config = Config::Tiny->read( $opts{'c'} );
@@ -166,6 +183,18 @@ $ua->default_header( 'Authorization',
 my $t0 = Benchmark->new;
 
 my $response;
+if ($fetch_id_from_name) {
+
+    # Try to find out ID based on name.
+    $response = $ua->get( $base_url . $API_VER . '/storage-systems' );
+
+    # TODO: Handle response Error.
+    if ($fetch_id_from_name) {
+        $system_id = get_sysid_from_name( $response, $opts{'i'} );
+        logPrint("Found SystemID $system_id for $opts{'i'}");
+    }
+}
+
 if ($system_id) {
     logPrint("API: Calling storage-systems/{system-id} ...");
     $response
@@ -214,8 +243,10 @@ if ( $response->is_success ) {
 }
 else {
     if ( $response->code eq '404' ) {
-        warn "The SystemID: ".$system_id .", was not found on the proxy.\n";
-        warn "Please check the documentation on how to search for it.\n";
+        warn "The SystemID: " . $system_id . ", is unknown by the proxy.\n";
+        warn "Please check the documentation on how to search for it."
+            . " Or try providing the System Name.\n";
+        exit 1;
     }
     else {
         die $response->status_line;
@@ -223,11 +254,13 @@ else {
 }
 
 print "Metrics Collected: \n " . Dumper( \$metrics_collected ) if $DEBUG;
-if ( $PUSH_TO_GRAPHITE ) {
+if ($PUSH_TO_GRAPHITE) {
     post_to_graphite($metrics_collected);
 }
 else {
-    logPrint("No metrics sent to graphite. Remove the -n if this was not intended.");
+    logPrint(
+        "No metrics sent to graphite. Remove the -n if this was not intended."
+    );
 }
 
 logPrint('Execution completed');
@@ -251,7 +284,7 @@ sub get_vol_stats {
     my $t0 = Benchmark->new;
     logPrint("API: Calling analysed-volume-statistics");
     my $stats_response
-        = $ua->get( $base_url 
+        = $ua->get( $base_url
             . $API_VER
             . '/storage-systems/'
             . $sys_id
@@ -331,23 +364,27 @@ sub post_to_graphite {
     # Send metrics and upon error fail fast
     foreach my $system ( keys %$met_coll ) {
         logPrint("post_to_graphite: Build Metrics for -$system-") if $DEBUG;
-        foreach my $vols ( keys %{$met_coll->{$system}} ) {
-            logPrint("post_to_graphite: Build Metrics for vol -$vols-") if $DEBUG;
-            foreach my $mets ( keys %{$met_coll->{$system}->{$vols}} ) {
+        foreach my $vols ( keys %{ $met_coll->{$system} } ) {
+            logPrint("post_to_graphite: Build Metrics for vol -$vols-")
+                if $DEBUG;
+            foreach my $mets ( keys %{ $met_coll->{$system}->{$vols} } ) {
                 $full_metric
-                    = $metrics_path
-                    . "."
-                    . $system
-                    . "."
+                    = $metrics_path . "."
+                    . $system . "."
                     . $vols . "."
                     . $mets . " "
                     . $met_coll->{$system}->{$vols}->{$mets} . " "
                     . $epoch;
-                logPrint( "post_to_graphite: Metric: " . $full_metric ) if $DEBUG;
+                logPrint( "post_to_graphite: Metric: " . $full_metric )
+                    if $DEBUG;
 
-                if ( ! defined $connection->send("$full_metric\n") ){
-                    $socket_err = $! || 'failed without a specific library error';
-                    logPrint("post_to_graphite: Socket failure with reason: [$socket_err]",  "err" );
+                if ( !defined $connection->send("$full_metric\n") ) {
+                    $socket_err = $!
+                        || 'failed without a specific library error';
+                    logPrint(
+                        "post_to_graphite: Socket failure with reason: [$socket_err]",
+                        "err"
+                    );
                     undef $connection;
                 }
             }
@@ -372,11 +409,13 @@ sub get_drive_stats {
     logPrint( "API: Call took " . timestr($td) );
     if ( $stats_response->is_success ) {
         my $drive_stats = from_json( $stats_response->decoded_content );
-        logPrint( "get_drive_stats: Number of drives: " . scalar(@$drive_stats) );
+        logPrint(
+            "get_drive_stats: Number of drives: " . scalar(@$drive_stats) );
 
         # skip if no drives present on this system (really possible?)
         if ( scalar(@$drive_stats) ) {
-            process_drive_metrics( $sys_name, $drive_stats, $metrics_collected );
+            process_drive_metrics( $sys_name, $drive_stats,
+                $metrics_collected );
         }
         else {
             warn "Not processing $sys_name because it has no Drives\n"
@@ -408,4 +447,28 @@ sub process_drive_metrics {
             }
         }
     }
+}
+
+# Iterate Through the list of systems know by this proxy instance trying to
+# find the provided value with a System Name.
+#
+sub get_sysid_from_name {
+    my ( $response, $id_provided ) = (@_);
+    my $sys_id;
+
+    #print Dumper(\$response);
+    my $storage_systems = from_json( $response->decoded_content );
+
+    for my $stg_sys (@$storage_systems) {
+        my $stg_sys_name = $stg_sys->{name};
+        my $stg_sys_id   = $stg_sys->{id};
+
+        if ( $stg_sys_name eq $id_provided ) {
+            return $stg_sys_id;
+        }
+    }
+
+    # No Match Found!
+    warn "Not able to match $id_provided with a System Name, giving up!\n";
+    exit 1;
 }
