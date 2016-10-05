@@ -885,6 +885,16 @@
             "text": "e5600-riak-202",
             "value": "e5600-riak-202",
             "selected": false
+          },
+          {
+            "text": "e5600lab-101",
+            "value": "e5600lab-101",
+            "selected": false
+          },
+          {
+            "text": "ef560lab-101",
+            "value": "ef560lab-101",
+            "selected": false
           }
         ],
         "query": "storage.eseries.*",
@@ -968,8 +978,8 @@
   "annotations": {
     "list": []
   },
-  "refresh": false,
+  "refresh": "1m",
   "schemaVersion": 12,
-  "version": 18,
+  "version": 19,
   "links": []
 }
