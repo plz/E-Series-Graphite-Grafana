@@ -60,9 +60,9 @@ Usage: ./eseries-metrics-collector.pl [options]
 * `-d`: Debug mode, increase verbosity.
 * `-c`: Webservice proxy config file.
 * `-t`: Timeout in seconds for API Calls (Default=15).
-* `-i`: E-Series ID to Poll. ID is bound to proxy instance. If not defined use all appliances known by Proxy.
+* `-i`: E-Series ID or System Name to Poll. ID is bound to proxy instance. If not defined it will use all appliances known by Proxy.
 
-If you are not familiar with the System ID you can go to your console and execute the following:
+The recommended mechanisim is System Name, but if you want to use the System ID and you are not familiar with it, you can go to your console and execute the following:
 
     curl -X GET --header "Accept: application/json" "http://myproxy.example.com:8080/devmgr/v2/storage-systems" -u ro
 
