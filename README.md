@@ -16,7 +16,7 @@ following specs:
 
 * CentOS release 6.7 (Final)
 * Perl v5.18.2
-* Santricity Web Services Proxy 1.4 (01.40.7000.0004)
+* Santricity Web Services Proxy 1.4 (01.40.X000.0009)
 * Grafana 3.0.4
 
 Data Visualization
@@ -38,8 +38,9 @@ Perl Dependencies
 
 Setting up the Web Proxy
 -------------------------------------------------------------------------------
-Although the steps to configure the Santricity Web Services Proxy is out of scope
-there are 2 important configuration settings you need to define in *wsconfig.xml*
+Although the steps required to configure the Santricity Web Services Proxy are
+out of scope for this guide, there are 2 important configuration settings you
+need to define in *wsconfig.xml*
 
 * `<env key="stats.poll.interval">60</env>`
 * `<env key="stats.poll.save.history">1</env>`
@@ -50,7 +51,7 @@ link requires access to NetApp support site.
 
 Data Collection Script Usage
 -------------------------------------------------------------------------------
-Script is meant to be run under crontab every minute. 
+Script is meant to be scheduled under crontab every minute.
 
 ./eseries-metrics-collector.pl -h
 Usage: ./eseries-metrics-collector.pl [options]
