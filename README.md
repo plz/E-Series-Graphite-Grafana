@@ -26,6 +26,8 @@ Data Visualization
    feel similar to the _Cluster Group_ dashboard done by
    [Chris Madden](https://github.com/dutchiechris) for
    [NetApp Harvest](http://blog.pkiwi.com/category/netapp-harvest/).
+* `grafana-dashboards/Disk Overview.json` - This is a Work-in-progress
+   dashboard. It is used to represent per Disk Metrics exposed by proxy.
 
 Perl Dependencies
 -------------------------------------------------------------------------------
