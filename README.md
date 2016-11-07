@@ -16,7 +16,7 @@ following specs:
 
 * CentOS release 6.7 (Final)
 * Perl v5.18.2
-* Santricity Web Services Proxy 1.4 (01.40.X000.0009)
+* Santricity Web Services Proxy 2.0 (02.00.7000.0004)
 * Grafana 3.0.4
 
 Data Visualization
@@ -48,7 +48,7 @@ need to define in *wsconfig.xml*
 * `<env key="stats.poll.save.history">1</env>`
 
 If you need extra details on how to work with the proxy, you might want to check
-the [User Guide](https://library.netapp.com/ecm/ecm_get_file/ECMLP2428357). This
+the [User Guide](https://library.netapp.com/ecm/ecm_download_file/ECMLP2524838). This
 link requires access to NetApp support site.
 
 Data Collection Script Usage
