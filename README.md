@@ -14,7 +14,7 @@ Data Collection
 The collection script has been running on several Linux Systems with the
 following specs:
 
-* CentOS release 6.7 (Final)
+* CentOS release 6.8 (Final)
 * Perl v5.18.2
 * Santricity Web Services Proxy 2.0 (02.00.7000.0004)
 * Grafana 3.0.4
