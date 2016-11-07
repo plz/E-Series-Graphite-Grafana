@@ -188,10 +188,15 @@ if ($fetch_id_from_name) {
     # Try to find out ID based on name.
     $response = $ua->get( $base_url . $API_VER . '/storage-systems' );
 
-    # TODO: Handle response Error.
-    if ($fetch_id_from_name) {
-        $system_id = get_sysid_from_name( $response, $opts{'i'} );
-        logPrint("Found SystemID $system_id for $opts{'i'}");
+    if ( $response->is_success ) {
+        if ($fetch_id_from_name) {
+            $system_id = get_sysid_from_name( $response, $opts{'i'} );
+            logPrint("Found SystemID $system_id for $opts{'i'}");
+        }
+    }
+    else {
+        logPrint("Request FAILED: " . $response->status_line, 'ERR');
+        die $response->status_line;
     }
 }
 
