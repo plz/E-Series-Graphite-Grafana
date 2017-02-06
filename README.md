@@ -53,8 +53,20 @@ link requires access to NetApp support site.
 
 Data Collection Script Usage
 -------------------------------------------------------------------------------
-Script is meant to be scheduled under crontab every minute.
+The collection script can be deployed in 2 different ways:
 
+Option 1: _Cron_
+
+The simpler, via cron job every minute.
+
+Option 2: _SystemD Service_
+
+Alternatively, you can use the systemd unit file provided by Maulis Adam <maulis@andrews.hu> which lives in the misc directory `eseries-metrics-collector.service`. The script assumes you have installed the collector in /opt/netapp/E-Series-Graphite-Grafana. If that's not the case you will need to tweak it.
+
+    systemctl enable /opt/netapp/E-Series-Graphite-Grafana/eseries-metrics-collector.service
+    systemctl start eseries-metrics-collector
+
+These are the command line arguments that can be used to modify the behavior of the collector.
 ./eseries-metrics-collector.pl -h
 Usage: ./eseries-metrics-collector.pl [options]
 
@@ -65,7 +77,7 @@ Usage: ./eseries-metrics-collector.pl [options]
 * `-t`: Timeout in seconds for API Calls (Default=15).
 * `-i`: E-Series ID or System Name to Poll. ID is bound to proxy instance. If not defined it will use all appliances known by Proxy.
 
-The recommended mechanisim is System Name, but if you want to use the System ID and you are not familiar with it, you can go to your console and execute the following:
+The recommended mechanism is System Name, but if you want to use the System ID and you are not familiar with it, you can go to your console and execute the following:
 
     curl -X GET --header "Accept: application/json" "http://myproxy.example.com:8080/devmgr/v2/storage-systems" -u ro
 
