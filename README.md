@@ -17,7 +17,7 @@ following specs:
 * CentOS release 6.8 (Final)
 * Perl v5.18.2
 * Santricity Web Services Proxy 2.0 (02.00.7000.0004)
-* Grafana 3.0.4
+* Grafana 4.1.1
 
 Data Visualization
 --------------------------------------------------------------------------------
@@ -28,6 +28,8 @@ Data Visualization
    [NetApp Harvest](http://blog.pkiwi.com/category/netapp-harvest/).
 * `grafana-dashboards/Disk Overview.json` - This is a Work-in-progress
    dashboard. It is used to represent per Disk Metrics exposed by proxy.
+* `grafana-dashboards/Volume Detail.json` - **NEW** It is used to represent per 
+   volume metrics.
 
 Perl Dependencies
 -------------------------------------------------------------------------------
