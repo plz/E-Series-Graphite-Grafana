@@ -765,7 +765,7 @@
             "$__all"
           ]
         },
-        "datasource": "local carbon api",
+        "datasource": null,
         "hide": 0,
         "includeAll": true,
         "label": null,
