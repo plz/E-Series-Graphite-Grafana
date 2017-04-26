@@ -100,18 +100,19 @@ openlog( 'eseries-metrics-collector', 'pid', 'local0' );
 
 # Command line opts parsing and processing.
 my %opts = ( h => undef );
-getopts( 'hdnc:t:i:', \%opts );
+getopts( 'hdnec:t:i:', \%opts );
 
 if ( $opts{'h'} ) {
     print "Usage: $0 [options]\n";
     print "  -h: This help message.\n";
     print "  -n: Don't push to graphite.\n";
     print "  -d: Debug mode, increase verbosity.\n";
-    print "  -c: Webservice proxy config file.\n";
+    print "  -c: config file with credentials and API End Point.\n";
     print "  -t: Timeout in secs for API Calls (Default=$API_TIMEOUT).\n";
     print "  -i: E-Series ID or System Name to Poll.";
     print " ID is bound to proxy instance. If not defined it will";
     print " use all appliances known by Proxy.\n";
+    print "  -e: Embedded mode. Applicable with new HW Generation. More metrics available.\n";
 
     exit 0;
 }
@@ -143,6 +144,11 @@ if ( $opts{'i'} ) {
     }
 }
 else {
+    if ( $opts{'e'} ) {
+        warn "For Embedded mode you need to provide an ID to poll, otherwise we can't collect any metrics.\n";
+        exit 1;
+    }
+
     logPrint("Will poll all known systems by Webservice proxy.");
 }
 if ( $opts{'n'} ) {
@@ -166,9 +172,26 @@ $config = Config::Tiny->read( $opts{'c'} );
 
 my $username = $config->{_}->{user};
 my $password = $config->{_}->{password};
+
+my $endpoint;
+
+if ( $opts{'e'} ) {
+    # embedded only supports restapi as directive.
+    $endpoint = $config->{_}->{restapi};
+}
+else {
+    # backwards compatible with old config directive _proxy_
+    if ( defined $config->{_}->{proxy} ) {
+        $endpoint = $config->{_}->{proxy};
+    }
+    else {
+        $endpoint = $config->{_}->{restapi};
+    }
+}
+
 my $base_url
     = $config->{_}->{proto} . '://'
-    . $config->{_}->{proxy} . ':'
+    . $endpoint . ':'
     . $config->{_}->{port};
 
 logPrint("Base URL for Statistics Collection=$base_url") if $DEBUG;
@@ -176,6 +199,8 @@ logPrint("Base URL for Statistics Collection=$base_url") if $DEBUG;
 my $ua = LWP::UserAgent->new;
 $ua->timeout($API_TIMEOUT);
 
+# TODO make this configurable.
+$ua->ssl_opts(verify_hostname => 0);
 $ua->default_header( 'Content-type', 'application/json' );
 $ua->default_header( 'Accept',       'application/json' );
 $ua->default_header( 'Authorization',
@@ -229,6 +254,12 @@ if ( $response->is_success ) {
 
         get_vol_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
         get_drive_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
+
+        if ( $opts{'e'} ) {
+            # For embedded systems we get extra metrics to poll.
+            # not ready yet.
+            #get_live_statistics( $stg_sys_name, $stg_sys_id, $metrics_collected );
+        }
     }
     else {
 
@@ -476,4 +507,37 @@ sub get_sysid_from_name {
     # No Match Found!
     warn "Not able to match $id_provided with a System Name, giving up!\n";
     exit 1;
+}
+
+# Invoke remote API to get live performance statistics.
+sub get_live_statistics {
+    my ( $sys_name, $sys_id, $met_coll ) = (@_);
+
+    my $t0 = Benchmark->new;
+    logPrint("API: Calling live-statistics");
+    my $stats_response
+        = $ua->get( $base_url
+            . $API_VER
+            . '/storage-systems/'
+            . $sys_id
+            . '/live-statistics' );
+    my $t1 = Benchmark->new;
+    my $td = timediff( $t1, $t0 );
+    logPrint( "API: Call took " . timestr($td) );
+    if ( $stats_response->is_success ) {
+        my $live_stats = from_json( $stats_response->decoded_content );
+
+        #print  Dumper (\$live_stats) if $DEBUG;
+        my $cont_stats  = %{$live_stats->{'controllerStats'}};
+
+        foreach my $controller (@$cont_stats) {
+            print "controller_stats for controllerId: $controller->{'controllerId'} - ". $controller->{'cpuUtilizationStats'}[0]->{'maxCpuUtilization'}. " \n" if $DEBUG;
+            print Dumper(\$controller) if $DEBUG;
+        }
+        exit 0;
+
+    }
+    else {
+        die $stats_response->status_line;
+    }
 }

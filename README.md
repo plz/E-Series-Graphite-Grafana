@@ -3,13 +3,17 @@ Collect Metrics from NetApp E-Series Storage appliances and dispatch them to gra
 
 This repository contains a perl script that can connect to the NetApp Santricity web
 proxy, and collect performance metrics from a E-Series Storage Appliance.
+
+It's also possible to use the tool to monitor E-Series systems that run SANtricity
+System Manager (E2800), that is the embedded management application & REST Api.
+
 You can also use the Grafana Dashboard provided to visualize the collected metrics.
 
 Data Collection
 --------------------------------------------------------------------------------
 * `graphite-collector/eseries-metrics-collector.pl` - Script that will connect
-   to the web proxy and collect data, and pushes it to graphite. You'll need
-   a functioning web proxy as pre-requisite.
+   to the web proxy or the embedded rest api (e2800) and collect data, and pushes
+   it to graphite. You might need a functioning web proxy as pre-requisite.
 
 The collection script has been running on several Linux Systems with the
 following specs:
@@ -18,6 +22,7 @@ following specs:
 * Perl v5.18.2
 * Santricity Web Services Proxy 2.0 (02.00.7000.0004)
 * Grafana 4.1.1
+* SANtricity 11.30 on Embedded versions (e2800)
 
 Data Visualization
 --------------------------------------------------------------------------------
@@ -42,6 +47,10 @@ Perl Dependencies
 
 Setting up the Web Proxy
 -------------------------------------------------------------------------------
+The need of a Web Proxy instance will depend on the E-Series model you are
+trying to monitor. E2800's already ship SANtricity System Manager which replace
+the features that the proxy used to provide.
+
 Although the steps required to configure the Santricity Web Services Proxy are
 out of scope for this guide, there are 2 important configuration settings you
 need to define in *wsconfig.xml*
@@ -75,9 +84,10 @@ Usage: ./eseries-metrics-collector.pl [options]
 * `-h`: This help message.
 * `-n`: Don't push to graphite.
 * `-d`: Debug mode, increase verbosity.
-* `-c`: Webservice proxy config file.
+* `-c`: config file with credentials and API End Point.
 * `-t`: Timeout in seconds for API Calls (Default=15).
 * `-i`: E-Series ID or System Name to Poll. ID is bound to proxy instance. If not defined it will use all appliances known by Proxy.
+* `-e`: Embedded mode. Applicable with new HW Generation. More metrics available (Not yet :).
 
 The recommended mechanism is System Name, but if you want to use the System ID and you are not familiar with it, you can go to your console and execute the following:
 
@@ -90,13 +100,14 @@ And you should obtain something like:
 Data Collection Script Configuration File
 -------------------------------------------------------------------------------
 The data collection script will need a configuration file with details on how
-to connect to the proxy. Check `graphite-collector/proxy-config.conf` or 
+to connect to the appliance. Check `graphite-collector/api-config.conf` or
 the following snippet:
 
     ###
     ### Santricity Web Services Proxy hostname, FQDN, or IP
+    ### If monitoring a system with embedded management interface use that FQDN.
     ###
-    proxy = mywebservice.example.com
+    restapi = mywebservice.example.com
 
     ###
     ### Protocol (http|https)
