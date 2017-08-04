@@ -138,6 +138,21 @@ the following snippet:
     root        = storage.eseries
     timeout     = 5
 
+
+Docker
+--------------------------------------------------------------------------------
+A Dockerfile and Docker-Compose file are available for simple deployment and/or trying out the functionality.
+
+The Dockerfile is intended to be a simple deployment of this project only, and is most useful if you
+already have Graphite and Grafana installed separately. If neither are currently installed/running, the
+docker-compose.yml file will define a test configuration for you that will start all three.
+
+It will be necessary for you to modify the graphite-collector/api-config.conf file with details on your
+environment, including the location and credentials of the WebServices Proxy, etc.
+
+Grafana will not load the dashboards provided in grafana-dashboards by default. These may be imported
+into the running Grafana instance. They will be persisted by default in a mount Docker host volume.
+
 BUGS
 --------------------------------------------------------------------------------
 Please report them [here](https://github.com/plz/E-Series-Graphite-Grafana/issues)
