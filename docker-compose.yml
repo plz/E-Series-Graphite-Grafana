@@ -1,0 +1,35 @@
+###
+#  Running this Docker configuration will start a simple deployment of Graphite+Grafana and then
+# initiate a 3rd container (defined by the Dockerfile), that will, by default, collect statistics
+# from the configured Proxy (graphite-collector/api-config.conf), every minute.
+#
+#  This is not intended to be a production-ready deployment, but improvements are welcome/desired.
+###
+version: '2'
+services:
+  monitor:
+    build: .
+    image: eseries-graphite-grafana
+    depends_on:
+      - graphite
+      - grafana
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - .grafana/lib:/var/lib/grafana
+    depends_on:
+      - graphite
+  graphite:
+    image: hopsoft/graphite-statsd
+    ports:
+      - "8080:80"
+      - "2003-2004:2003-2004"
+      - "2023-2024:2023-2024"
+      - "8125:8125/udp"
+      - "8126:8126"
+    volumes:
+      # NOTE: If the graphite configuration is changed, it may be necessary to wipe out the existing collections
+      - .db-data:/opt/graphite/storage/whisper
