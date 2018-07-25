@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 #
-# Copyright 2016 Pablo Luis Zorzoli
+# Copyright 2016-2018 Pablo Luis Zorzoli
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -221,7 +221,7 @@ if ($fetch_id_from_name) {
     }
     else {
         logPrint("Request FAILED: " . $response->status_line, 'ERR');
-        die $response->status_line;
+        exit 1;
     }
 }
 
@@ -285,7 +285,8 @@ else {
         exit 1;
     }
     else {
-        die $response->status_line;
+        logPrint( "API Call error: $response->status_line" ) ;
+        exit 1;
     }
 }
 
@@ -342,7 +343,9 @@ sub get_vol_stats {
         }
     }
     else {
-        die $stats_response->status_line;
+        my $err = from_json( $stats_response->decoded_content );
+        logPrint( "get_vol_stats: Failed to collect Vol Stats -> " . $err->{'errorMessage'} . " - " . $err->{'localizedMessage'} );
+        exit 1;
     }
 }
 
@@ -459,7 +462,8 @@ sub get_drive_stats {
         }
     }
     else {
-        die $stats_response->status_line;
+        logPrint("get_drive_stats: API call failed  $stats_response->status_line");
+        exit 1;
     }
 }
 
