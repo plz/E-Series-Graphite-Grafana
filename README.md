@@ -5,24 +5,24 @@ This repository contains a perl script that can connect to the NetApp Santricity
 proxy, and collect performance metrics from a E-Series Storage Appliance.
 
 It's also possible to use the tool to monitor E-Series systems that run SANtricity
-System Manager (E2800), that is the embedded management application & REST Api.
+System Manager (E2800), that is the embedded management application & REST API.
 
-You can also use the Grafana Dashboard provided to visualize the collected metrics.
+You can also use the Grafana Dashboards provided to visualize the collected metrics.
 
 Data Collection
 --------------------------------------------------------------------------------
 * `graphite-collector/eseries-metrics-collector.pl` - Script that will connect
-   to the web proxy or the embedded rest api (e2800) and collect data, and pushes
+   to the netapp webproxy or the embedded rest API (e2800) collect data, and push
    it to graphite. You might need a functioning web proxy as pre-requisite.
 
 The collection script has been running on several Linux Systems with the
 following specs:
 
-* CentOS release 6.8 (Final)
+* CentOS release 7.5.1804
 * Perl v5.18.2
-* Santricity Web Services Proxy 2.0 (02.00.7000.0004)
+* Santricity Web Services Proxy 2.1 (02.10.7000.0008)
 * Grafana 4.1.1
-* SANtricity 11.30 on Embedded versions (e2800)
+* SANtricity 11.40.2 on Embedded versions (e2800)
 
 Data Visualization
 --------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ Data Visualization
    [NetApp Harvest](http://blog.pkiwi.com/category/netapp-harvest/).
 * `grafana-dashboards/Disk Overview.json` - This is a Work-in-progress
    dashboard. It is used to represent per Disk Metrics exposed by proxy.
-* `grafana-dashboards/Volume Detail.json` - **NEW** It is used to represent per 
+* `grafana-dashboards/Volume Detail.json` - It is used to represent per
    volume metrics.
 
 Perl Dependencies
