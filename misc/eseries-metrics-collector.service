@@ -11,7 +11,7 @@ StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=eseries
 SyslogLevel=notice
-ExecStart=/bin/dash -c 'while true; do ./eseries-metrics-collector.pl -c proxy-config.conf ; sleep 60 ; done'
+ExecStart=/bin/dash -c 'while true; do ./eseries-metrics-collector.pl -c api-config.conf ; sleep 60 ; done'
 Restart=on-failure
 
 # man systemd.unit
@@ -20,4 +20,3 @@ After=web_services_proxy.service
 
 [Install]
 WantedBy=multi-user.target
-
