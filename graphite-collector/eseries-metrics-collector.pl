@@ -103,17 +103,7 @@ my %opts = ( h => undef );
 getopts( 'hdnec:t:i:', \%opts );
 
 if ( $opts{'h'} ) {
-    print "Usage: $0 [options]\n";
-    print "  -h: This help message.\n";
-    print "  -n: Don't push to graphite.\n";
-    print "  -d: Debug mode, increase verbosity.\n";
-    print "  -c: config file with credentials and API End Point.\n";
-    print "  -t: Timeout in secs for API Calls (Default=$API_TIMEOUT).\n";
-    print "  -i: E-Series ID or System Name to Poll.";
-    print " ID is bound to proxy instance. If not defined it will";
-    print " use all appliances known by Proxy.\n";
-    print "  -e: Embedded mode. Applicable with new HW Generation. More metrics available.\n";
-
+    usage();
     exit 0;
 }
 if ( $opts{'d'} ) {
@@ -122,12 +112,13 @@ if ( $opts{'d'} ) {
 }
 if ( $opts{'c'} ) {
     if ( not -e -f -r $opts{'c'} ) {
-        warn "Access problems to $opts{'c'} - check path and permissions.\n";
+        warn "Access problems to -> $opts{'c'} :: check that this configuration file exists and access permissions.\n";
         exit 1;
     }
 }
 else {
-    warn "Need to define a webservice proxy config file.\n";
+    warn "\nError: Need to specify config file. See below: \n\n";
+    usage();
     exit 1;
 }
 if ( $opts{'i'} ) {
@@ -145,7 +136,8 @@ if ( $opts{'i'} ) {
 }
 else {
     if ( $opts{'e'} ) {
-        warn "For Embedded mode you need to provide an ID to poll, otherwise we can't collect any metrics.\n";
+        warn "\nError: For Embedded mode you need to provide an ID (see -i arg) to poll, otherwise we can't collect metrics.\n\n";
+        usage();
         exit 1;
     }
 
@@ -302,6 +294,23 @@ else {
 
 logPrint('Execution completed');
 exit 0;
+
+sub usage {
+
+    print "Usage: $0 [options]\n";
+    print "  -h: This help message.\n";
+    print "  -n: Don't push to graphite.\n";
+    print "  -d: Debug mode, increase verbosity.\n";
+    print "  -c: config file with credentials and API End Point.\n";
+    print "  -t: Timeout in secs for API Calls (Default=$API_TIMEOUT).\n";
+    print "  -i: E-Series ID or System Name to Poll.";
+    print " ID is bound to proxy instance. If not defined it will";
+    print " use all appliances known by Proxy.\n";
+    print "  -e: Flag for embedded mode. Option applicable for systems running API services in-box.\n";
+    print "\n\nExample:\n\n";
+    print "  $0 -c /path/to/api-config.conf -i system-name -e\n\n";
+
+}
 
 # Utility sub to send info to rsyslog and STDERR if in debug mode.
 sub logPrint {
