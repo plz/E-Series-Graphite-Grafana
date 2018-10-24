@@ -2,7 +2,7 @@
 Collect Metrics from NetApp E-Series Storage appliances and dispatch them to graphite.
 
 This repository contains a perl script that can connect to the NetApp Santricity web
-proxy, and collect performance metrics from a E-Series Storage Appliance.
+proxy, and collect performance metrics from an E-Series Storage Appliance.
 
 It's also possible to use the tool to monitor E-Series systems that run SANtricity
 System Manager, that is the embedded management application & REST API.
@@ -12,8 +12,9 @@ You can also use the Grafana Dashboards provided to visualize the collected metr
 Data Collection
 --------------------------------------------------------------------------------
 * `graphite-collector/eseries-metrics-collector.pl` - Script that will connect
-   to the netapp webproxy or the embedded rest API (e2800) collect data, and push
-   it to graphite. You might need a functioning web proxy as pre-requisite.
+   to the netapp webproxy or the embedded rest API (newer models) to collect
+   performance data, and push it to graphite. You might need a functioning web
+   proxy as pre-requisite.
 
 The collection script has been running on several Linux Systems with the
 following specs:
@@ -22,7 +23,7 @@ following specs:
 * Perl v5.18.2
 * Santricity Web Services Proxy 2.1 (02.10.7000.0008)
 * Grafana 4.1.1
-* SANtricity 11.40.2 on Embedded versions (e2800)
+* SANtricity 11.40.2 on Embedded versions (tested on e2800,e5700)
 
 Data Visualization
 --------------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Data Visualization
    collected metrics. This dashboard was inspired and tries to keep the look &
    feel similar to the _Cluster Group_ dashboard done by
    [Chris Madden](https://github.com/dutchiechris) for
-   [NetApp Harvest](http://blog.pkiwi.com/category/netapp-harvest/).
+   [NetApp Harvest](https://mysupport.netapp.com/tools/info/ECMLP2314554I.html?productID=61924&pcfContentID=ECMLP2314554).
 * `grafana-dashboards/Disk Overview.json` - This is a Work-in-progress
    dashboard. It is used to represent per Disk Metrics exposed by proxy.
 * `grafana-dashboards/Volume Detail.json` - It is used to represent per
@@ -45,7 +46,7 @@ Perl Dependencies
 * Benchmark
 * Scalar::Util
 
-Setting up the Web Proxy
+Setting up the Web Proxy (optional step)
 -------------------------------------------------------------------------------
 The need of a Web Proxy instance will depend on the E-Series model you are
 trying to monitor. E2800 and other newer models already ship SANtricity System
@@ -109,15 +110,15 @@ Once you define the configuration file based on the above section, you'll alread
 have a clear picture of the connectivity requirements for the script to be able
 to work properly:
 
-1. restapi & port: Based on that configuration pair, you know that you'll need
+* *restapi* & *port*: Based on that configuration pair, you know that you'll need
 to review any firewalls in the middle between the place were you run collection
 script and the actual storage appliance.
 
-2. graphite server & port: This may also vary a lot depending on your graphite
+* *graphite server* & *port*: This may also vary a lot depending on your graphite
 setup, but in order to be able to ship metrics, you'll need to be able to access
 either your graphite instance directly, or a submission relay of sorts.
 
-Entries in syslog should warn you about failures to connnect to an endpoint:
+Entries in syslog should warn you about failures to connect to an endpoint:
 
     2018-10-23T17:20:07.840014+02:00 myhostname eseries-metrics-collector[34674]: Request FAILED: 500 Can't connect to eseriesXX1.xxx.example.com:443
 
@@ -139,8 +140,9 @@ Alternatively, you can use the systemd unit file provided by Maulis Adam <maulis
     systemctl start eseries-metrics-collector
 
 These are the command line arguments that can be used to modify the behavior of the collector.
-./eseries-metrics-collector.pl -h
-Usage: ./eseries-metrics-collector.pl [options]
+
+    ./eseries-metrics-collector.pl -h
+    Usage: ./eseries-metrics-collector.pl [options]
 
 * `-h`: This help message.
 * `-n`: Don't push to graphite.
