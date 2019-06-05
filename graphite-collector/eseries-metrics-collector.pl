@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 #
-# Copyright 2016-2018 Pablo Luis Zorzoli
+# Copyright 2016-2019 Pablo Luis Zorzoli
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -84,6 +84,13 @@ my %drive_metrics = (
     'writePhysicalIOps'    => 0,
     'writeResponseTime'    => 0,
     'writeThroughput'      => 0,
+);
+
+# Selected metrics to collect from drive pool, for ease of reading keep sorted.
+my %pool_metrics = (
+    'freePoolSpace'     => 0,
+    'unconfiguredSpace' => 0,
+    'usedPoolSpace'     => 0,
 );
 
 my $metrics_collected;
@@ -246,6 +253,7 @@ if ( $response->is_success ) {
 
         get_vol_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
         get_drive_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
+        get_pool_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
 
         if ( $opts{'e'} ) {
             # For embedded systems we get extra metrics to poll.
@@ -266,6 +274,7 @@ if ( $response->is_success ) {
 
             get_vol_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
             get_drive_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
+            get_pool_stats( $stg_sys_name, $stg_sys_id, $metrics_collected );
         }
     }
 }
@@ -494,6 +503,51 @@ sub process_drive_metrics {
                 $met_coll->{$sys_name}->{$drv_met_key}->{$met_name}
                     = $drv->{$met_name};
             }
+        }
+    }
+}
+
+# Invoke remote API to get pool statistics.
+sub get_pool_stats {
+    my ( $sys_name, $sys_id, $met_coll ) = (@_);
+
+    my $t0 = Benchmark->new;
+    logPrint("get_pool_stats: API: Calling Storage Systems for pool stats");
+
+    my $stats_response
+        = $ua->get( $base_url
+            . $API_VER
+            . '/storage-systems/'
+            . $sys_id
+         );
+    my $t1 = Benchmark->new;
+    my $td = timediff( $t1, $t0 );
+    logPrint( "get_pool_stats: API: Call took " . timestr($td) );
+
+    if ( $stats_response->is_success ) {
+        my $pool_stats = from_json( $stats_response->decoded_content );
+
+        process_pool_metrics( $sys_name, $pool_stats, $metrics_collected );
+    }
+    else {
+        logPrint("get_pool_stats: API call failed  $stats_response->status_line");
+        exit 1;
+    }
+}
+
+# Coalece Pool metrics into custom structure, to just store the ones
+# we care about.
+sub process_pool_metrics {
+    my ( $sys_name, $pool_mets, $met_coll ) = (@_);
+
+    logPrint( "process_pool_metrics: Building pool metrics for gra") if $DEBUG;
+
+    $met_coll->{$sys_name}->{'pool_statistics'} = {};
+
+    foreach my $met_name ( keys %pool_metrics ) {
+        if ( exists $pool_mets->{$met_name} ) {
+            $met_coll->{$sys_name}->{'pool_statistics'}->{$met_name}
+                = $pool_mets->{$met_name};
         }
     }
 }
