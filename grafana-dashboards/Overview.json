@@ -1,4 +1,46 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_GRAPHITE",
+      "label": "Graphite",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "graphite",
+      "pluginName": "Graphite"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "5.2.4"
+    },
+    {
+      "type": "panel",
+      "id": "grafana-piechart-panel",
+      "name": "Pie Chart",
+      "version": "1.3.6"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": "5.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "graphite",
+      "name": "Graphite",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": "5.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -15,8 +57,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 827,
-  "iteration": 1559735729701,
+  "id": null,
+  "iteration": 1560527333367,
   "links": [
     {
       "asDropdown": true,
@@ -46,26 +88,27 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": true,
+      "colorBackground": false,
       "colorValue": false,
       "colors": [
         "rgba(245, 54, 54, 0.9)",
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "format": "none",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
-        "show": false,
+        "show": true,
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 12,
+        "h": 7,
+        "w": 8,
         "x": 0,
         "y": 1
       },
@@ -126,27 +169,28 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": true,
+      "colorBackground": false,
       "colorValue": false,
       "colors": [
         "rgba(245, 54, 54, 0.9)",
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "format": "none",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
-        "show": false,
+        "show": true,
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 12,
-        "x": 12,
+        "h": 7,
+        "w": 8,
+        "x": 8,
         "y": 1
       },
       "height": "100px",
@@ -205,12 +249,66 @@
       "valueName": "avg"
     },
     {
+      "aliasColors": {},
+      "breakPoint": "50%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": "${DS_GRAPHITE}",
+      "fontSize": "80%",
+      "format": "bytes",
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 24,
+      "interval": null,
+      "legend": {
+        "percentage": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "values": true
+      },
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "pieType": "pie",
+      "strokeWidth": "2",
+      "targets": [
+        {
+          "refCount": 0,
+          "refId": "A",
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.usedPoolSpace, 2, 4)"
+        },
+        {
+          "refCount": 0,
+          "refId": "B",
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.freePoolSpace, 2, 4)"
+        },
+        {
+          "refCount": 0,
+          "refId": "C",
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.unconfiguredSpace, 2, 4)"
+        }
+      ],
+      "title": "Space Utilization",
+      "transparent": false,
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 8
       },
       "id": 16,
       "panels": [],
@@ -222,6 +320,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -230,7 +329,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 5
+        "y": 9
       },
       "height": "250px",
       "id": 4,
@@ -310,6 +409,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -318,7 +418,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 5
+        "y": 9
       },
       "height": "250px",
       "id": 2,
@@ -398,6 +498,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -406,7 +507,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 5
+        "y": 9
       },
       "height": "250px",
       "id": 3,
@@ -486,6 +587,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -494,7 +596,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 12
+        "y": 16
       },
       "height": "250px",
       "id": 5,
@@ -574,6 +676,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -582,7 +685,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 12
+        "y": 16
       },
       "height": "250px",
       "id": 6,
@@ -662,6 +765,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -670,7 +774,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 12
+        "y": 16
       },
       "height": "250px",
       "id": 7,
@@ -750,6 +854,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -758,7 +863,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 19
+        "y": 23
       },
       "height": "250px",
       "id": 8,
@@ -838,6 +943,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -846,7 +952,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 19
+        "y": 23
       },
       "height": "250px",
       "id": 9,
@@ -926,6 +1032,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -934,7 +1041,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 19
+        "y": 23
       },
       "height": "250px",
       "id": 10,
@@ -1015,7 +1122,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 30
       },
       "id": 22,
       "panels": [],
@@ -1024,77 +1131,28 @@
     },
     {
       "aliasColors": {},
-      "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "fontSize": "80%",
-      "format": "bytes",
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 27
-      },
-      "id": 24,
-      "interval": null,
-      "legend": {
-        "percentage": true,
-        "show": true,
-        "sort": null,
-        "sortDesc": null,
-        "values": false
-      },
-      "legendType": "Under graph",
-      "links": [],
-      "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "strokeWidth": 1,
-      "targets": [
-        {
-          "refCount": 0,
-          "refId": "A",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.usedPoolSpace)"
-        },
-        {
-          "refCount": 0,
-          "refId": "B",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.freePoolSpace)"
-        },
-        {
-          "refCount": 0,
-          "refId": "C",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.unconfiguredSpace)"
-        }
-      ],
-      "title": "Space Utilization",
-      "transparent": true,
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_GRAPHITE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 27
+        "w": 24,
+        "x": 0,
+        "y": 31
       },
       "id": 26,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -1112,17 +1170,17 @@
         {
           "refCount": 0,
           "refId": "A",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.usedPoolSpace)"
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.usedPoolSpace, 2, 4)"
         },
         {
           "refCount": 0,
           "refId": "B",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.freePoolSpace)"
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.freePoolSpace, 2, 4)"
         },
         {
           "refCount": 0,
           "refId": "C",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.unconfiguredSpace)"
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.unconfiguredSpace, 2, 4)"
         }
       ],
       "thresholds": [],
@@ -1178,12 +1236,8 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-	   "selected": false,
-	   "text": "All",
-	   "value": "$__all"
-        },
-        "datasource": null,
+        "current": {},
+        "datasource": "${DS_GRAPHITE}",
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -1312,5 +1366,5 @@
   "timezone": "browser",
   "title": "NetApp E-Series Overview",
   "uid": "000000827",
-  "version": 28
+  "version": 9
 }
