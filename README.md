@@ -9,6 +9,10 @@ System Manager, that is the embedded management application & REST API.
 
 You can also use the Grafana Dashboards provided to visualize the collected metrics.
 
+As of Jul 2019 NetApp released [an official](https://github.com/NetApp/eseries-perf-analyzer)
+replacement for this tool, I would strongly recommend you evaluating it for your needs.
+
+
 Data Collection
 --------------------------------------------------------------------------------
 * `graphite-collector/eseries-metrics-collector.pl` - Script that will connect
@@ -19,11 +23,11 @@ Data Collection
 The collection script has been running on several Linux Systems with the
 following specs:
 
-* CentOS release 7.5.1804
+* CentOS release 7.6.1810
 * Perl v5.18.2
 * Santricity Web Services Proxy 2.1 (02.10.7000.0008)
-* Grafana 4.1.1
-* SANtricity 11.40.2 on Embedded versions (tested on e2800,e5700)
+* Grafana 6.2.5
+* SANtricity 11.50.1 on Embedded versions (tested on e2800,e5700)
 
 Data Visualization
 --------------------------------------------------------------------------------

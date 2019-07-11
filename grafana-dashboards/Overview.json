@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 827,
-  "iteration": 1559735729701,
+  "iteration": 1562843885080,
   "links": [
     {
       "asDropdown": true,
@@ -39,179 +39,6 @@
         "x": 0,
         "y": 0
       },
-      "id": 20,
-      "panels": [],
-      "title": "Cache Utilization",
-      "type": "row"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "editable": true,
-      "error": false,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 12,
-        "x": 0,
-        "y": 1
-      },
-      "height": "100px",
-      "id": 11,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "%",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(2, 2, 2)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "refId": "A",
-          "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.readCacheUtilization, $TopResources)"
-        }
-      ],
-      "thresholds": "10,20",
-      "title": "Read Cache Utilization",
-      "type": "singlestat",
-      "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "editable": true,
-      "error": false,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
-      "height": "100px",
-      "id": 12,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "%",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(1, 1, 1)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "refId": "A",
-          "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.writeCacheUtilization, $TopResources)"
-        }
-      ],
-      "thresholds": "80,90",
-      "title": "Write Cache Utilization",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 4
-      },
       "id": 16,
       "panels": [],
       "title": "Workload Drilldown",
@@ -230,7 +57,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 5
+        "y": 1
       },
       "height": "250px",
       "id": 4,
@@ -248,6 +75,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -318,7 +146,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 5
+        "y": 1
       },
       "height": "250px",
       "id": 2,
@@ -336,6 +164,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -406,7 +235,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 5
+        "y": 1
       },
       "height": "250px",
       "id": 3,
@@ -424,6 +253,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -494,7 +324,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 12
+        "y": 8
       },
       "height": "250px",
       "id": 5,
@@ -512,6 +342,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -582,7 +413,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 12
+        "y": 8
       },
       "height": "250px",
       "id": 6,
@@ -600,6 +431,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -670,7 +502,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 12
+        "y": 8
       },
       "height": "250px",
       "id": 7,
@@ -688,6 +520,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -758,7 +591,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 19
+        "y": 15
       },
       "height": "250px",
       "id": 8,
@@ -776,6 +609,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -846,7 +680,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 19
+        "y": 15
       },
       "height": "250px",
       "id": 9,
@@ -864,6 +698,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -934,7 +769,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 19
+        "y": 15
       },
       "height": "250px",
       "id": 10,
@@ -952,6 +787,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1015,64 +851,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 22
       },
       "id": 22,
       "panels": [],
       "title": "Capacity",
       "type": "row"
-    },
-    {
-      "aliasColors": {},
-      "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "fontSize": "80%",
-      "format": "bytes",
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 27
-      },
-      "id": 24,
-      "interval": null,
-      "legend": {
-        "percentage": true,
-        "show": true,
-        "sort": null,
-        "sortDesc": null,
-        "values": false
-      },
-      "legendType": "Under graph",
-      "links": [],
-      "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "strokeWidth": 1,
-      "targets": [
-        {
-          "refCount": 0,
-          "refId": "A",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.usedPoolSpace)"
-        },
-        {
-          "refCount": 0,
-          "refId": "B",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.freePoolSpace)"
-        },
-        {
-          "refCount": 0,
-          "refId": "C",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.unconfiguredSpace)"
-        }
-      ],
-      "title": "Space Utilization",
-      "transparent": true,
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
     },
     {
       "aliasColors": {},
@@ -1082,24 +866,27 @@
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 27
+        "w": 16,
+        "x": 0,
+        "y": 23
       },
       "id": 26,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1112,17 +899,17 @@
         {
           "refCount": 0,
           "refId": "A",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.usedPoolSpace)"
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.usedPoolSpace, 2, 4)"
         },
         {
           "refCount": 0,
           "refId": "B",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.freePoolSpace)"
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.freePoolSpace, 2, 4)"
         },
         {
           "refCount": 0,
           "refId": "C",
-          "target": "aliasByMetric(storage.eseries.$ESystem.pool_statistics.unconfiguredSpace)"
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.unconfiguredSpace, 2, 4)"
         }
       ],
       "thresholds": [],
@@ -1166,10 +953,241 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "breakPoint": "50%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "description": "In order to get a Pie Chart that makes sense, you need to select only one system.",
+      "fontSize": "80%",
+      "format": "bytes",
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 23
+      },
+      "id": 24,
+      "interval": null,
+      "legend": {
+        "percentage": true,
+        "show": true,
+        "sortDesc": true,
+        "values": false
+      },
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "options": {},
+      "pieType": "pie",
+      "strokeWidth": "1",
+      "targets": [
+        {
+          "refCount": 0,
+          "refId": "A",
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.usedPoolSpace, 2, 4)"
+        },
+        {
+          "refCount": 0,
+          "refId": "B",
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.freePoolSpace, 2, 4)"
+        },
+        {
+          "refCount": 0,
+          "refId": "C",
+          "target": "aliasByNode(storage.eseries.$ESystem.pool_statistics.unconfiguredSpace, 2, 4)"
+        }
+      ],
+      "title": "Space Utilization Distribution (select only one system)",
+      "transparent": true,
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "id": 20,
+      "panels": [],
+      "title": "Cache Utilization (select only one system)",
+      "type": "row"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(50, 172, 45, 0.97)"
+      ],
+      "description": "In order to get a working gauge, please select only one system",
+      "editable": true,
+      "error": false,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 33
+      },
+      "height": "100px",
+      "id": 11,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "%",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(2, 2, 2)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "refId": "A",
+          "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.readCacheUtilization, $TopResources)"
+        }
+      ],
+      "thresholds": "10,20",
+      "title": "Read Cache Utilization",
+      "type": "singlestat",
+      "valueFontSize": "100%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(50, 172, 45, 0.97)"
+      ],
+      "description": "In order to get a working gauge, please select only one system",
+      "editable": true,
+      "error": false,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 33
+      },
+      "height": "100px",
+      "id": 12,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "%",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(1, 1, 1)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "refId": "A",
+          "target": "highestAverage(storage.eseries.$ESystem.volume_statistics.*.writeCacheUtilization, $TopResources)"
+        }
+      ],
+      "thresholds": "80,90",
+      "title": "Write Cache Utilization",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 16,
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [
     "NetAppESeries"
@@ -1178,12 +1196,6 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-	   "selected": false,
-	   "text": "All",
-	   "value": "$__all"
-        },
-        "datasource": null,
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -1312,5 +1324,5 @@
   "timezone": "browser",
   "title": "NetApp E-Series Overview",
   "uid": "000000827",
-  "version": 28
+  "version": 32
 }
