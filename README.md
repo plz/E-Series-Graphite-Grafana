@@ -26,7 +26,7 @@ following specs:
 * CentOS release 7.6.1810
 * Perl v5.18.2
 * Santricity Web Services Proxy 2.1 (02.10.7000.0008)
-* Grafana 6.2.5
+* Grafana 6.2.5. Needs PieChart [Plugin](https://grafana.com/plugins/grafana-piechart-panel)
 * SANtricity 11.50.1 on Embedded versions (tested on e2800,e5700)
 
 Data Visualization
